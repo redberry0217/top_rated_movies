@@ -79,7 +79,6 @@ fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', opti
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 
-
 function search() {
     fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options)
         .then(response => response.json())
@@ -91,7 +90,13 @@ function search() {
                 posterPath: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
                 voteRate: movie.vote_average,
             }));
-            const keyword = searchInput.value.toLowerCase();
+            const keyword = searchInput.value.toLowerCase().trim();
+
+            if (!keyword) { // input 유효성 인
+                alert('검색어를 입력해주세요.');
+                return;
+            }
+
             const filteredMovies = allMovies.filter(movie =>
                 movie.title.toLowerCase().includes(keyword)
             );
