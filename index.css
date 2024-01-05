@@ -10,6 +10,10 @@ body {
     background-color: #FFF2E8;
 }
 
+a {
+    text-decoration-line: none
+}
+
 nav {
     background: linear-gradient(45deg, #f8c39b, #de8286);
     width: 100%;
@@ -87,6 +91,7 @@ header {
     border: 2px solid #000000;
     background-color: #752329;
     border-radius: 20px;
+    cursor: pointer;
 }
 
 .movieTitle1 {
@@ -127,10 +132,15 @@ header {
     background-color: #f8c39b;
     border-radius: 20px;
     height: 350px;
+    cursor: pointer;
 }
 
-.otherMoviesPic {
-    border-radius: 3%;
+.movieImg {
+    justify-content: center;
+}
+
+.moviePoster {
+    border-radius: 5%;
 }
 
 .movieCard2content {
