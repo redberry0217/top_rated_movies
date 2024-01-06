@@ -19,7 +19,7 @@ fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', opti
 
             if (index < 3) { /** 평점 상위 1~3위 영화 */
                 movieDiv.innerHTML = `
-        <div class="movieCard1" data-movie-id="${movie.id}">
+        <div class="movieCard1" data-movie-id="${movie.id}" onclick="clickCard(event)">
             <div class="movieTitle1">
             ${movie.title}
             </div>
@@ -34,7 +34,7 @@ fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', opti
         `;
             } else { /** 그 외의 영화 */
                 movieDiv.innerHTML = `
-        <div class="movieCard2" data-movie-id="${movie.id}">
+        <div class="movieCard2" data-movie-id="${movie.id}" onclick="clickCard(event)">
             <div class="movieImg">
                 <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" class="moviePoster" alt="${movie.title}" width="200">
             </div>
@@ -59,21 +59,13 @@ fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', opti
                 otherMovies.appendChild(movieDiv);
             }
         });
-        /** 영화 카드 클릭 시 영화id 출력 */
-        document.addEventListener('click', function (event) {
-            const clickedElement = event.target;
-            const parentElements = document.querySelectorAll('.movieCard1, .movieCard2');
-        
-            parentElements.forEach(parentElement => {
-                if (clickedElement === parentElement || parentElement.contains(clickedElement)) {
-                    const movieId = parentElement.dataset.movieId;
-                    alert(`영화 ID: ${movieId}`);
-                }
-            });
-        });
-        
     })
     .catch(err => console.error(err));
+
+/** 영화 카드 클릭 시 영화id 출력 */
+function clickCard(event) {
+    alert(`영화 ID: ${event.currentTarget.getAttribute('data-movie-id')}`)
+}
 
 /** 영화 검색하기 */
 const searchInput = document.getElementById('searchInput');
@@ -109,7 +101,7 @@ function search() {
                 const movieItem = document.createElement('div');
                 movieItem.classList.add('movieItem');
                 movieItem.innerHTML = `
-                <div class="movieCard2" data-movie-id="${movie.id}">
+                <div class="movieCard2" data-movie-id="${movie.id}" onclick="clickCard(event)">
                 <div class="movieImg">
                     <img src="https://image.tmdb.org/t/p/w500/${movie.posterPath}" class="moviePoster" alt="${movie.title}" width="200">
                 </div>
