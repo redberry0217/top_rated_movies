@@ -17,11 +17,41 @@ fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', opti
         data.results.forEach((movie, index) => {
             const movieDiv = document.createElement('div');
 
-            if (index < 3) { /** 평점 상위 1~3위 영화 */
+            if (index < 1) { /** 평점 상위 1위 영화 */
                 movieDiv.innerHTML = `
         <div class="movieCard1" data-movie-id="${movie.id}" onclick="clickCard(event)">
             <div class="movieTitle1">
-            ${movie.title}
+            <img src="img/rank1.png" width=25> ${movie.title}
+            </div>
+            <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}" width="300">
+            <div class="movieOverview1">
+            ${movie.overview}
+            </div>
+            <div class="movieRate1">
+                평점 ${movie.vote_average}
+            </div>
+        </div>
+        `;
+            } else if (index < 2) { /** 평점 상위 2위 영화 */
+                movieDiv.innerHTML = `
+        <div class="movieCard1" data-movie-id="${movie.id}" onclick="clickCard(event)">
+            <div class="movieTitle1">
+            <img src="img/rank2.png" width=25> ${movie.title}
+            </div>
+            <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}" width="300">
+            <div class="movieOverview1">
+            ${movie.overview}
+            </div>
+            <div class="movieRate1">
+                평점 ${movie.vote_average}
+            </div>
+        </div>
+        `;
+            } else if (index < 3) { /** 평점 상위 3위 영화 */
+                movieDiv.innerHTML = `
+        <div class="movieCard1" data-movie-id="${movie.id}" onclick="clickCard(event)">
+            <div class="movieTitle1">
+            <img src="img/rank3.png" width=25> ${movie.title}
             </div>
             <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}" width="300">
             <div class="movieOverview1">
