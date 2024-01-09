@@ -16,70 +16,42 @@ fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', opti
 
         data.results.forEach((movie, index) => {
             const movieDiv = document.createElement('div');
+            let rankIcon = '';
 
-            if (index < 1) { /** 평점 상위 1위 영화 */
+            if (index < 3) { /** 평점 상위 1~3위 영화 */
+                rankIcon = `<img src="img/rank${index + 1}.png" width=25>`;
                 movieDiv.innerHTML = `
-        <div class="movieCard1" data-movie-id="${movie.id}" onclick="clickCard(event)">
-            <div class="movieTitle1">
-            <img src="img/rank1.png" width=25> ${movie.title}
-            </div>
-            <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}" width="300">
-            <div class="movieOverview1">
-            ${movie.overview}
-            </div>
-            <div class="movieRate1">
-                평점 ${movie.vote_average}
-            </div>
-        </div>
-        `;
-            } else if (index < 2) { /** 평점 상위 2위 영화 */
-                movieDiv.innerHTML = `
-        <div class="movieCard1" data-movie-id="${movie.id}" onclick="clickCard(event)">
-            <div class="movieTitle1">
-            <img src="img/rank2.png" width=25> ${movie.title}
-            </div>
-            <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}" width="300">
-            <div class="movieOverview1">
-            ${movie.overview}
-            </div>
-            <div class="movieRate1">
-                평점 ${movie.vote_average}
-            </div>
-        </div>
-        `;
-            } else if (index < 3) { /** 평점 상위 3위 영화 */
-                movieDiv.innerHTML = `
-        <div class="movieCard1" data-movie-id="${movie.id}" onclick="clickCard(event)">
-            <div class="movieTitle1">
-            <img src="img/rank3.png" width=25> ${movie.title}
-            </div>
-            <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}" width="300">
-            <div class="movieOverview1">
-            ${movie.overview}
-            </div>
-            <div class="movieRate1">
-                평점 ${movie.vote_average}
-            </div>
-        </div>
+                    <div class="movieCard1" data-movie-id="${movie.id}" onclick="clickCard(event)">
+                        <div class="movieTitle1">
+                        ${rankIcon} ${movie.title}
+                        </div>
+                        <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}" width="300">
+                        <div class="movieOverview1">
+                        ${movie.overview}
+                        </div>
+                        <div class="movieRate1">
+                            평점 ${movie.vote_average}
+                        </div>
+                    </div>
         `;
             } else { /** 그 외의 영화 */
                 movieDiv.innerHTML = `
-        <div class="movieCard2" data-movie-id="${movie.id}" onclick="clickCard(event)">
-            <div class="movieImg">
-                <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" class="moviePoster" alt="${movie.title}" width="200">
-            </div>
-            <div class="movieCard2content">
-            <div class="movieTitle2">
-                ${movie.title}
-                </div>
-                <div class="movieOverview2">
-                ${movie.overview}
-                </div>
-                <div class="movieRate2">
-                평점 ${movie.vote_average}
-                </div>
-            </div>
-        </div>
+                    <div class="movieCard2" data-movie-id="${movie.id}" onclick="clickCard(event)">
+                        <div class="movieImg">
+                            <img src="https://image.tmdb.org/t/p/w500/${movie.poster_path}" class="moviePoster" alt="${movie.title}" width="200">
+                        </div>
+                        <div class="movieCard2content">
+                        <div class="movieTitle2">
+                            ${movie.title}
+                            </div>
+                            <div class="movieOverview2">
+                            ${movie.overview}
+                            </div>
+                            <div class="movieRate2">
+                            평점 ${movie.vote_average}
+                            </div>
+                        </div>
+                    </div>
         `;
             }
 
@@ -114,7 +86,7 @@ function search() {
             }));
             const keyword = searchInput.value.toLowerCase().trim();
 
-            if (!keyword) { // input 유효성 인
+            if (!keyword) { // 검색어를 입력하지 않았을 때
                 alert('검색어를 입력해주세요.');
                 return;
             }
@@ -122,6 +94,11 @@ function search() {
             const filteredMovies = allMovies.filter(movie =>
                 movie.title.toLowerCase().includes(keyword)
             );
+
+            if(filteredMovies.length === 0) { // 검색 결과가 없을 때
+                alert('"' + keyword + '"' + '의 검색 결과가 없습니다. 다른 검색어를 입력해 보세요.');
+                return;
+            }
 
             top3Movies.innerHTML = '';
             otherMovies.innerHTML = '';
